@@ -1,59 +1,222 @@
-'use strict';
+"use strict";
 
 // Data needed for a later exercise
 const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+
+const weekDays = ["mon", "tue", "wed", "thu", "fri",'sat','sun'];
+
+const openingHours = {
+  [weekDays[3]] : {
+    open: 12,
+    close: 22,
+  },
+  [weekDays[4]] : {
+    open: 11,
+    close: 23,
+  },
+  [weekDays[5]] : {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
 
 // Data needed for first part of the section
 const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  name: "Classico Italiano",
+  location: "Via Angelo Tavanti 23, Firenze, Italy",
+  categories: ["Italian", "Pizzeria", "Vegetarian", "Organic"],
+  starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese Salad"],
+  mainMenu: ["Pizza", "Pasta", "Risotto"],
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  // ES-6 enhanced object literals
+  openingHours,
 
-  order:function (starterIndex,mainIndex) {
+  order(starterIndex, mainIndex) {
     // console.log(this);
-    return [this.starterMenu[starterIndex],this.starterMenu[mainIndex]];   //  restarunt.startMneu[2]
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]; //  restarunt.startMneu[2]
   },
 
-  orderDelivery : function ({                            // set default value
+  orderDelivery({
+    // set default value
     starterIndex = 1,
     mainIndex = 0,
     time = 23.35,
-    address = 'No, 10 EB Road',
-  }) {                      
+    address = "No, 10 EB Road",
+  }) {
     console.log(`Order Delivered ,${this.name}!!,
       ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]}
 will be Delivered to ${address}, at ${time}. `);
   },
 
-  orderPasta : function (ing1,ing2,ing3) {
-    console.log(`Here is your delicious Pasta with ${ing1},${ing2} and ${ing3}.`);
+  orderPasta(ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious Pasta with ${ing1},${ing2} and ${ing3}.`
+    );
   },
 
-  orderPizza : function (mainIngredient,second,...othersIngredients) {
+  orderPizza: function (mainIngredient, second, ...othersIngredients) {
     console.log(mainIngredient);
     console.log(second);
     console.log(othersIngredients);
-  }
+  },
 };
+
+
+
 /*
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// Maps  
+            //| it's Like Object
+            //| object key only string - Map is somethig different
+            //| key - We can put String,( numbers | Boolean | DOM Element | array | object )
+
+const rest = new Map();
+
+// set
+
+rest.set('name','KFC');
+rest.set(1,'Tamil Nadu, India');
+// console.log(rest.set(2,'New york, America'));
+rest.set('categories',["Italian", "Pizzeria", "Vegetarian", "Organic"])
+.set('open',10)
+.set('close',22)
+.set(true,'We are open :)')
+.set(false,'We are closed :(')
+
+//  get
+// console.log(rest.get('name'));                // console - KFC
+// console.log(rest.get(true));                  // console - We are open :)
+
+rest.set('order1','Pizza').set('order2','Pasta');
+// console.log(rest.get('order1'));              // console - Pizza
+
+const time = 11;
+// console.log(rest.get( time > rest.get('open') && time < rest.get('close') ));    // we are open (or) close
+
+// has
+// console.log(rest.has('categories'));
+
+// delete
+rest.delete(2);
+
+// size
+// console.log(rest.size);
+
+// clear
+// rest.clear();
+
+// use array in Map
+
+// rest.set([1,2], 'Test');
+// console.log(rest.get([1,2]));      // console - undefined
+
+const arr = [1,2];
+rest.set(arr,'Test');
+// console.log(rest.get(arr));           // console - Test
+// console.log(rest.get(arr[0]))         // console - Tamil Nadu, India --> Because arr[0] = 1
+
+// Use DOM in Map
+rest.set(document.querySelector('h1'),'Heading')
+console.log(rest);
+
+// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+// Sets
+
+const orderSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza'
+  ]);
+
+console.log(new Set('Bala'));
+// size
+console.log(orderSet.size);          // its not array --> so used ( - size - ) not length
+// has
+console.log(orderSet.has('Pizza')); 
+console.log(orderSet.has('Bread'));
+// add
+orderSet.add('Bread');
+// delete
+orderSet.delete('Risotto');
+// clear
+// orderSet.clear();
+console.log(orderSet);
+
+for(const order of orderSet) console.log(order);
+
+// Examples
+
+const staff = ['Waiter','Chef','Waiter','Manager','Chef','Waiter'];
+const staffUnique = new Set(staff);         // set is used { }
+const staffUniques = [...new Set(staff)];    // create normal array - use set array
+
+console.log(staff);
+console.log(staffUnique);
+console.log(staffUniques);
+
+console.log(new Set(['Waiter','Chef','Waiter','Manager','Chef','Waiter']).size);
+console.log(new Set('Balagururaja').size);          // 7 --- >  Balgurj - its only take
+
+// Looping Object
+
+// Property Names
+
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are opening ${properties.length} days :`
+
+for(const day of properties){                       // for of loop
+  openStr += `${day},`; 
+};
+console.log(openStr);
+
+// Property Values
+
+const values = Object.values(openingHours);
+console.log(values);
+
+// Property Enteries
+
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+// [key, values]
+
+for(const [day,{open,close}] of entries){
+  console.log(`On ${day} We are opening ${open} and close at ${close}`)
+}
+
+// optional Change  ( ?. )
+
+// console.log(restaurant.openingHours.mon);
+// console.log(restaurant.openingHours.mon?.open);
+
+const days = ["mon", "tue", "wed", "thu", "fri",'sat','sun'];
+
+for(const day of days){
+  const open = restaurant.openingHours?.[day]?.open ?? 'closed';
+  console.log(`on ${day}, we are open at ${open} `);
+};
+
+// Methods
+
+console.log(restaurant.order?.(2,1) ?? 'Methods does not exist');
+
+console.log(restaurant.orderRisoto ?. (1,1) ?? 'Methods does not exist');
+
+// arrary
+
+const users = [{name : 'Balaguru',email : 'balag0414@gmail.com'}];
+
+console.log(users[0]?.name ?? 'array is empty');
+
+console.log(users[0] > 0 ?? 'arrray is empty');
+
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 // the lopping Array - the - for - of loop
@@ -88,6 +251,7 @@ for(const [i,el] of menu.entries()){
 
 // ---- Coding Challenge ----
 
+*/
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
@@ -128,6 +292,102 @@ const game = {
     team2: 6.5,
   },
 };
+
+// # Challenge 2
+
+/* 
+Let's continue with our football betting app!
+
+1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+      Odd of victory Bayern Munich: 1.33
+      Odd of draw: 3.25
+      Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+      {
+        Gnarby: 1,
+        Hummels: 1,
+        Lewandowski: 2
+      }
+
+GOOD LUCK 😀
+
+
+// ----------- My Lecture --------------
+
+// 1.
+console.log('---------  1 ---------');
+
+for(const [i,player] of game.scored.entries()){
+  console.log(`Goal ${i+1} : ${player}`);
+};
+
+// 2.
+console.log('---------  2 ---------');
+
+const odds = Object.values(game.odds);
+console.log(odds);
+let average = 0;
+
+for(const odd of odds) average += odd;
+  average /= odds.length;
+console.log(average);
+
+// 3.
+console.log('---------  3 ---------');
+
+for (const [team,odd] of Object.entries(game.odds)){
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+  console.log(`Odd of ${teamStr} : ${odd}.`);
+};
+
+console.log(game.team1);
+
+// 4. BONUS
+console.log('---------  4 ---------');
+
+const scorers = {} ;
+// console.log (scorers)
+for(const player of  game.scored){
+  console.log(player);
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+}
+
+console.log(scorers);
+// ----------- My TRY --------------
+
+// // 1.
+// console.log('---------  1 ---------');
+
+// const score = game.scored;
+// console.log(score);
+
+// for (const [key,value] of score.entries()){
+//   console.log(`Goal ${key + 1} : ${value}`);
+// };
+
+// // 2.
+// console.log('---------  2 ---------');
+
+// const odd = Object.values(game.odds);
+// // console.log(odd);
+
+// let average = 0;
+// let sum = 0;
+
+// for (const a of odd){  
+//    sum += a;
+//    average = sum/3;
+// }
+// // console.log(sum);
+// console.log(`Average is : ${average}.`);
+
+/*
+
+// # Challenge 1
 
 // 1.
 const [player1,player2] = game.players;
@@ -474,15 +734,3 @@ const [p = 1,q = 1,r = 1] = [8,9];        // r = 1
 console.log(p,q,r);
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
