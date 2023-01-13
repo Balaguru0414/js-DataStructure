@@ -61,10 +61,46 @@ will be Delivered to ${address}, at ${time}. `);
     console.log(othersIngredients);
   },
 };
-
-
-
 /*
+// Map Iteration
+
+const question = new Map([
+  ['question','What is the best programming language in the world ?'],
+  [1,'C'],
+  [2,'Java'],
+  [3,'Java Script'],
+  ['correct',3],
+  [true,'Correct 🥳'],
+  [false,'Try again 😞'],
+  ]);
+// console.log(question);
+
+// convert object to Map
+// console.log(Object.entries(openingHours));
+
+const hoursMap = new Map(Object.entries(openingHours));
+// console.log(hoursMap);
+
+
+console.log(question.get('question'));        // Don't Apply - Object.entries | because - MAP - have a Key And value
+for (const [key,value] of question){
+  if (typeof key === 'number') console.log(`Answer ${key} : ${value}`);
+}
+
+// const answer = Number(prompt(`${question.get('question')}`));
+// console.log(answer);
+
+// const correct = answer === question.get('correct') ? question.get(true) : question.get(false);
+// console.log(correct);
+//    -----   ( OR )
+// console.log(question.get(question.get('correct') === answer));
+
+// convert Array to Map
+console.log([...question]);
+
+console.log(question.keys());
+console.log(question.values());
+
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 // Maps  
             //| it's Like Object
