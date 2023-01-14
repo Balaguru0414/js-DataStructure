@@ -62,6 +62,189 @@ will be Delivered to ${address}, at ${time}. `);
   },
 };
 /*
+// working with strings
+
+const airplane ='TAP Air India';
+const plane = 'IN21';
+
+console.log(plane[0]);                            // I
+console.log(plane[1]);                            // N
+console.log(airplane.length);                     // 14
+
+console.log('Bala'[0]);                           // B
+console.log('IN2101'.length);                     // 6
+
+console.log(airplane.indexOf('i'));               // 5
+console.log(airplane.lastIndexOf('i'));           // 11
+
+console.log(airplane.indexOf('India'));           // 8
+console.log(airplane.indexOf('india'));           // -1
+
+console.log(airplane.slice(5));
+console.log(airplane.slice(0,airplane.indexOf(' ')));               // TAP
+console.log(airplane.slice(airplane.lastIndexOf(' ') + 1));         // India
+
+// seat check
+
+const checkMiddleSeat = function (seat) {
+  const s = seat.slice(-1);
+
+  // 'B' and 'E' Middle Seat
+
+  if (s === 'B' || s === 'E') {
+    console.log('You have a Middle Seat.');
+  }
+  // 'A' and 'F' Wndow seat
+
+  else if(s === 'A' || s === 'F'){
+    console.log('You have a Window Seat.');
+  }
+  else{
+    console.log('You have a corner seat.');
+  }
+};
+
+checkMiddleSeat('7C');
+checkMiddleSeat('12B');
+checkMiddleSeat('14E');
+checkMiddleSeat('17F');
+checkMiddleSeat('15A');
+checkMiddleSeat('16D');
+
+// string primitive to string object
+
+console.log(new String('Balaguru'));           // {Balaguru}
+console.log(typeof new String("Balaguru"));    // object
+console.log(typeof new String('Balaguru').slice(1));
+
+console.log(airplane.toLowerCase());           // tap air india
+console.log(airplane.toUpperCase());           // TAP AIR INDIA
+
+// Fix Captalization in name
+
+const name = 'BaLaGuRu';
+const passengerLower = name.toLowerCase();   
+console.log(passengerLower);                                                        // balaguru
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1); // Balaguru
+console.log(passengerCorrect);
+
+// Comparing Email
+const email = 'balag0414@gmail.com';
+const loginEmail = 'BalaG0414@Gmail.Com\n';
+const lowerEmail = loginEmail.toLowerCase();
+console.log(lowerEmail);
+// const trimmedEmail = loginEmail.trim();
+// console.log(trimmedEmail);
+const normalizeEmail = loginEmail.toLowerCase().trim();
+// console.log(normalizeEmail);
+ console.log(email === lowerEmail);
+console.log(email === normalizeEmail);
+
+//Replacing
+
+const priceGB = '288,97₤';
+const priceUS = priceGB.replace('₤','$').replace(',','.'); // 288.97$
+console.log(priceUS);
+
+const announcement = `All passengers come to bording door 23,
+Borading door 23!`;
+console.log(announcement);
+console.log(announcement.replace('door','gate'));     // first door can change
+console.log(announcement.replaceAll('door','gate'));  // all door can change
+//         --- ( OR ) ---
+console.log(announcement.replace(/door/g,'gate'));    // all door can change
+
+// Boolean
+
+const plane ='Airbus A320neo';
+console.log(plane.includes('A320'));                // true
+console.log(plane.includes('Bus'));                 // false
+console.log(plane.startsWith('Air'));               // true
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the NEW Airbus family');
+}
+
+// Parctice Excercise
+
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are not allowed on board');
+  }else{
+    console.log('Welcome Abord')
+  }
+
+}
+checkBaggage('I have a laptop, some food and a pocket knife');
+checkBaggage('Socks and Camera');
+checkBaggage('Got some snackes and a gun for Proection');
+*/
+/*
+// Coding Challenge #3
+
+Let's continue with our football betting app! This time,
+we have a map with a log of the events that happened during
+the game. The values are the events themselves, and the keys 
+are the minutes in which each event happened (a football game 
+has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that
+ happened (no duplicates)
+
+2. After the game has finished, is was found that the yellow card 
+from minute 64 was unfair. So remove this event from the game 
+events log.
+
+3. Print the following string to the console: "An event happened,
+ on average, every 9 minutes" (keep in mind that a game has 90 
+ minutes)
+
+4. Loop over the events and log them to the console, marking 
+whether it's in the first half or second half (after 45 min) 
+of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+/*
+
+// 1.
+console.log(gameEvents.values());
+const event = [...new Set(gameEvents.values())];
+console.log(event);
+
+// 2.
+gameEvents.delete(64);
+
+// 3.
+console.log(`An event happened, on average, every ${Math.trunc(90 / gameEvents.size)} minutes.`);
+
+const time = [...gameEvents.keys()].pop();   // 92
+console.log(time);
+console.log(`An event happened, on average, every ${time / gameEvents.size} minutes.`)
+
+// 4.
+
+for (const [min,event] of gameEvents){
+  const half = min <= 45 ? 'FISRT' : 'SECOND';
+  console.log(`[${half} HALF] ${min} : ${event}`);
+}
+
 // Map Iteration
 
 const question = new Map([
@@ -284,10 +467,9 @@ for(const [i,el] of menu.entries()){
 // for(const name of family) console.log(name);                            // also use -- ( ...name / [...name] / [name] )
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+*/
 // ---- Coding Challenge ----
 
-*/
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
